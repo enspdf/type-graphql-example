@@ -11,6 +11,6 @@ export const testConn = (drop: boolean = false) => {
     database: "typegraphql-example-test",
     synchronize: drop,
     dropSchema: drop,
-    entities: [__dirname + "../entity/*.*"]
+    entities: [__dirname + "/../entity/*.*"]
   });
 };
