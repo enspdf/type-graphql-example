@@ -8,6 +8,10 @@ import connectRedis from "connect-redis";
 import { redis } from "./redis";
 import cors from "cors";
 import { createSchema } from "./utils/createSchema";
+import queryComplexity, {
+  fieldConfigEstimator,
+  simpleEstimator
+} from "graphql-query-complexity";
 
 const main = async () => {
   await createConnection();
@@ -17,7 +21,22 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema,
     formatError: formatArgumentValidationError,
-    context: ({ req, res }: any) => ({ req, res })
+    context: ({ req, res }: any) => ({ req, res }),
+    validationRules: [
+      queryComplexity({
+        maximumComplexity: 8,
+        variables: {},
+        onComplete: (complexity: number) => {
+          console.log(`Query Complexity: ${complexity}`);
+        },
+        estimators: [
+          fieldConfigEstimator(),
+          simpleEstimator({
+            defaultComplexity: 1
+          })
+        ]
+      }) as any
+    ]
   });
 
   const app = Express();
