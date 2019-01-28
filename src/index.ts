@@ -12,6 +12,7 @@ import queryComplexity, {
   fieldConfigEstimator,
   simpleEstimator
 } from "graphql-query-complexity";
+import { createAuthorsLoader } from "./utils/authorsLoader";
 
 const main = async () => {
   await createConnection();
@@ -21,7 +22,11 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema,
     formatError: formatArgumentValidationError,
-    context: ({ req, res }: any) => ({ req, res }),
+    context: ({ req, res }: any) => ({
+      req,
+      res,
+      authorsLoader: createAuthorsLoader()
+    }),
     validationRules: [
       queryComplexity({
         maximumComplexity: 8,
