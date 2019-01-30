@@ -8,10 +8,10 @@ import connectRedis from "connect-redis";
 import { redis } from "./redis";
 import cors from "cors";
 import { createSchema } from "./utils/createSchema";
-import queryComplexity, {
+/* import queryComplexity, {
   fieldConfigEstimator,
   simpleEstimator
-} from "graphql-query-complexity";
+} from "graphql-query-complexity";*/
 import { createAuthorsLoader } from "./utils/authorsLoader";
 
 const main = async () => {
@@ -28,7 +28,7 @@ const main = async () => {
       authorsLoader: createAuthorsLoader()
     }),
     validationRules: [
-      queryComplexity({
+      /*queryComplexity({
         maximumComplexity: 8,
         variables: {},
         onComplete: (complexity: number) => {
@@ -40,7 +40,7 @@ const main = async () => {
             defaultComplexity: 1
           })
         ]
-      }) as any
+      }) as any*/
     ]
   });
 
@@ -70,7 +70,7 @@ const main = async () => {
     })
   );
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () => {
     console.log("Server started on http://localhost:4000/graphql");
