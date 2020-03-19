@@ -31,7 +31,7 @@
     "@types/graphql": "^14.0.4",
     "@types/ioredis": "^4.0.4",
     "@types/jest": "^23.3.12",
-    "@types/node": "^10.12.18",
+    "@types/node": "^13.9.2",
     "@types/nodemailer": "^4.6.5",
     "@types/uuid": "^3.4.4",
     "faker": "^4.1.0",
